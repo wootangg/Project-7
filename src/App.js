@@ -1,37 +1,33 @@
 import React, { Component } from 'react';
 
-import Header from './Header';
 import apiKey from './config';
 import Gallery from './Gallery';
+import Header from './Header';
+
+import {BrowserRouter, Route} from 'react-router-dom';
 
 class App extends Component {
   constructor(){
     super();
     this.state = {
-      images: []
+      images: [],
+      loading: true
     }
   }
 
+  // initial api request load
   componentDidMount() {
-    fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=${apiKey}&per_page=20&format=json&nojsoncallback=1`)
-    .then(response => response.json())
-    .then(responseData => {
-      this.setState({
-        images : responseData.photos.photo
-      });
-    })
-    .catch(error => {
-      console.log(`Error fetching` , error)
-    });
-
+    this.searchImage();
   }
 
-  searchImage = (query) => {
-    fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=20&format=json&nojsoncallback=1`)
+  //search component
+  searchImage = (query = 'animals') => {
+    fetch(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
     .then(response => response.json())
     .then(responseData => {
       this.setState({
-        images : responseData.photos.photo
+        images : responseData.photos.photo,
+        loading: false
       });
     })
     .catch(error => {
@@ -42,13 +38,19 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <Header onSearch={this.searchImage} />
-        <div className="photo-container">
-          <h2>Results</h2>
-          <Gallery data={this.state.images} />
+      <BrowserRouter>
+        <div className="container">
+
+          <Header onSearch={this.searchImage} />
+          
+          <Route exact path="/" render={() => <Gallery data={this.state.images} loading={this.state.loading} />} />
+          <Route path="/cats" render={() => <Gallery data={this.state.images} loading={this.state.loading} />} />
+            
+          
+            
+
         </div>
-      </div>
+      </BrowserRouter>
     );
   }
 
