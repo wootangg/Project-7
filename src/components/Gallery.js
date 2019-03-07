@@ -27,7 +27,7 @@ const Gallery = (props) => {
     
     return (
         <div className="photo-container">
-            <h2>Results</h2>
+            <h2>{props.title} Results</h2>
             {
                 (props.loading) ? 
                 <p>Loading...</p> : 
