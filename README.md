@@ -1,4 +1,9 @@
-This project is gallery app made with react and flickr api
+This project is gallery app made with react and flickr api.<br>
+You'll need your flickr account and create config.js file in the src directory to put in your api key.<br>
+ex) Inside the config.js file create<br>
+>const apiKey = "my Api key";<br>
+>export default apiKey;
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

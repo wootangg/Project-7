@@ -5,6 +5,7 @@ import NoSearch from './NoSearch';
 const Gallery = (props) => {
     const results = props.data;
     let images;
+    
 
     //load images if api was successful
     if(results.length > 0) {

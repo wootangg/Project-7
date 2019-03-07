@@ -4,7 +4,8 @@ import apiKey from './config';
 import Gallery from './components/Gallery';
 import Header from './components/Header';
 import Nav from './components/Nav';
-import {BrowserRouter, Route, Redirect} from 'react-router-dom';
+import NoSearch from './components/NoSearch';
+import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 
 class App extends Component {
   constructor(){
@@ -85,14 +86,14 @@ class App extends Component {
           
           <Header onSearch={this.searchDefault} />
           <Nav  />
-          
-          <Route exact path="/" render={() => <Redirect to="/clouds" /> } />
-          <Route path="/clouds" render={() => <Gallery data={this.state.clouds} loading={this.state.loading} title={'clouds'} /> } />
-          <Route path="/mountains" render={() => <Gallery data={this.state.mountains} loading={this.state.loading} title={'mountains'} /> } />
-          <Route path="/flowers" render={() => <Gallery data={this.state.flowers} loading={this.state.loading} title={'flower'} /> } />
-          <Route path="/search" render={() => <Gallery data={this.state.img} loading={this.state.loading} title={this.state.title} />} />
-          
-          
+          <Switch>
+            <Route exact path="/" render={() => <Redirect to="/clouds" /> } />
+            <Route path="/clouds" render={() => <Gallery data={this.state.clouds} loading={this.state.loading} title={'clouds'} /> } />
+            <Route path="/mountains" render={() => <Gallery data={this.state.mountains} loading={this.state.loading} title={'mountains'} /> } />
+            <Route path="/flowers" render={() => <Gallery data={this.state.flowers} loading={this.state.loading} title={'flower'} /> } />
+            <Route path="/search" render={() => <Gallery data={this.state.img} loading={this.state.loading} title={this.state.title} />} />
+            <Route component={NoSearch} />
+          </Switch>
           
         </div>
       </BrowserRouter>
